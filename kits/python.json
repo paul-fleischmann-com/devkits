@@ -1,0 +1,5 @@
+{
+  "description": "Python 3 and pytest: the standard test image of the factory",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "python3"]
+}

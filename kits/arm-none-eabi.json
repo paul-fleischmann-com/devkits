@@ -1,0 +1,5 @@
+{
+  "description": "ARM Cortex-M bare metal: gcc-arm-none-eabi with newlib, CMake, Ninja and cppcheck",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "build-essential", "cmake-ninja", "python3", "arm-none-eabi-gcc", "cppcheck"]
+}

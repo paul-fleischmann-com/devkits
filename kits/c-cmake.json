@@ -1,0 +1,5 @@
+{
+  "description": "C/C++ built with CMake and tested with CTest, plus cppcheck for static analysis",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "build-essential", "cmake-ninja", "python3", "cppcheck"]
+}
