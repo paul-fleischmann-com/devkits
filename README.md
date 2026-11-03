@@ -49,12 +49,39 @@ python3 scripts/compose.py arm-none-eabi --commit "$(git rev-parse HEAD)"
 3. `python3 -m pytest -q tests` ausführen.
 4. Pull Request; jedes `install.sh` läuft als root im Build und wird deshalb gelesen, bevor es gemergt wird.
 
-## Bauen und benutzen
+## Bauen und benutzen via compose.py 
 
-Gebaut wird **in der Factory** (`infra/factory-test/build-devkit.sh <Kit>`, folgt in #383, Paket 2) als Benutzer `factory-worker` mit rootless Podman. Das Skript gibt die Image-ID aus; sie wird im Control Room als Test-Profil eingetragen (Admin > Factory > Einstellungen (Server), `FACTORY_TEST_PROFILES`). Das Eintragen bleibt eine Entscheidung eines Menschen.
+### Containerfile erzeugen
 
-**Stand:** noch nie gebaut. Der erste Bau am Server kann an der Paketquelle (Snapshot-Datum, Schlüsselring) oder an einem Paketnamen scheitern; das wird dann hier korrigiert.
+```bash
+python3 scripts/compose.py beaglebone-black
+```
 
-## Spiegel
+### Mit Commit-Information
 
-Dieses Repository liegt auf GitHub (privat). Im Forgejo des Servers ist es ein **Pull-Spiegel**: Änderungen entstehen hier, der Server holt sie.
+```bash
+python3 scripts/compose.py \
+    beaglebone-black \
+    --commit "$(git rev-parse HEAD)"
+```
+
+### Containerfile speichern
+
+```bash
+python3 scripts/compose.py \
+    beaglebone-black \
+    --commit "$(git rev-parse HEAD)" \
+    > Containerfile
+```
+
+## Lokaler Test
+
+```bash
+podman build -t test-devkit -f Containerfile .
+```
+
+## Validierung
+
+```bash
+python3 -m pytest -q tests
+```
