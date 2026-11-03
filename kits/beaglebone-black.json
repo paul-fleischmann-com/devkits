@@ -1,0 +1,15 @@
+{
+  "description": "BeagleBone Black development kit (AM335x, Yocto, U-Boot, Linux kernel)",
+  "apt_snapshot": "20261019T000000Z",
+  "features": [
+    "git",
+    "python3",
+    "build-essential",
+    "yocto-deps",
+    "kas",
+    "arm-toolchain",
+    "uboot-tools",
+    "device-tree-tools",
+    "ccache"
+  ]
+}
