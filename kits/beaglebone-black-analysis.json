@@ -1,0 +1,10 @@
+{
+  "description": "BeagleBone Black static analysis",
+  "apt_snapshot": "20261019T000000Z",
+  "features": [
+    "git",
+    "python3",
+    "cppcheck",
+    "clang-format"
+  ]
+}
