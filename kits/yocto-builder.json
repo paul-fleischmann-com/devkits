@@ -1,0 +1,12 @@
+{
+  "description": "Yocto Scarthgap build environment with kas",
+  "apt_snapshot": "20261019T000000Z",
+  "features": [
+    "git",
+    "python3",
+    "build-essential",
+    "yocto-deps",
+    "kas",
+    "ccache"
+  ]
+}
