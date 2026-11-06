@@ -49,5 +49,11 @@ jobs:
           DEVKIT_TMPDIR: ${{ runner.temp }}/podman-tmp
           DEVKIT_MIN_FREE_MB: "2048"
         run: |
+          set -o pipefail
           mkdir -p "$DEVKIT_TMPDIR"
-          devkit build "${{ matrix.kit }}" --src "$GITHUB_WORKSPACE" --commit "$GITHUB_SHA"
+          if ! devkit build "${{ matrix.kit }}" --src "$GITHUB_WORKSPACE" --commit "$GITHUB_SHA" 2>&1 | tee "$RUNNER_TEMP/build.log"; then
+            # the last lines as an annotation, readable without downloading the log
+            msg=$(grep -vE '^\s*$' "$RUNNER_TEMP/build.log" | tail -15 | cut -c1-300 | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
+            echo "::error title=build ${{ matrix.kit }} failed::$msg"
+            exit 1
+          fi
