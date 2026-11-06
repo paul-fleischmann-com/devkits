@@ -1,0 +1,53 @@
+name: build-kits
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      kits: ${{ steps.kits.outputs.kits }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: kits
+        run: echo "kits=$(ls kits/*.json | xargs -n1 basename | sed 's/\.json$//' | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: list
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kit: ${{ fromJson(needs.list.outputs.kits) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the latest devkit_builder release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/devkit-dl" "$HOME/.local/bin"
+          cd "$RUNNER_TEMP/devkit-dl"
+          gh release download --repo paul-fleischmann-com/devkit_builder \
+            --pattern 'devkit_*_linux_amd64.tar.gz' --pattern checksums.txt
+          sha256sum --check --ignore-missing checksums.txt
+          tar -xzf devkit_*_linux_amd64.tar.gz devkit
+          install -m 0755 devkit "$HOME/.local/bin/devkit"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Validate
+        run: devkit validate --src "$GITHUB_WORKSPACE"
+
+      - name: Build ${{ matrix.kit }}
+        env:
+          # the runner user takes the place of factory-worker
+          DEVKIT_WORKER: runner
+          DEVKIT_TMPDIR: ${{ runner.temp }}/podman-tmp
+          DEVKIT_MIN_FREE_MB: "2048"
+        run: |
+          mkdir -p "$DEVKIT_TMPDIR"
+          devkit build "${{ matrix.kit }}" --src "$GITHUB_WORKSPACE" --commit "$GITHUB_SHA"
