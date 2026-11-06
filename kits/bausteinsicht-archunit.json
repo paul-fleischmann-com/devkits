@@ -1,1 +1,1 @@
-{"description":"Bausteinsicht ArchUnit environment","apt_snapshot":"20261019T000000Z","features":["java21","maven","graphviz"]}
+{"description":"Bausteinsicht ArchUnit environment","apt_snapshot":"20261019T000000Z","features":["git","java21","maven","graphviz"]}
