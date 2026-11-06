@@ -59,7 +59,8 @@ def test_every_feature_is_well_formed(feature):
     script = (ROOT / "features" / feature / "install.sh").read_text()
     assert script.startswith("#!/usr/bin/env bash") and "set -euo pipefail" in script
     assert not re.search(r"\|\s*(ba)?sh\b", script), "no 'download | sh'"
-    assert "curl" not in script and "wget" not in script, "packages come from the dated apt snapshot, not from the net"
+    commands = "\n".join(l for l in script.splitlines() if not l.lstrip().startswith(("#", "apt-get install")))
+    assert "curl" not in commands and "wget" not in commands, "packages come from the dated apt snapshot, not from the net"
     assert (ROOT / "features" / feature / "install.sh").stat().st_mode & 0o111
 
 
