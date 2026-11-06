@@ -1,1 +1,1 @@
-{"description":"Bausteinsicht CI environment","apt_snapshot":"20261019T000000Z","features":["git","java17","graphviz","plantuml","asciidoctor","jq","curl"]}
+{"description":"Bausteinsicht CI environment","apt_snapshot":"20261019T000000Z","features":["git","java21","graphviz","plantuml","asciidoctor","jq","curl"]}
