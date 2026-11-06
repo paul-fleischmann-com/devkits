@@ -1,0 +1,5 @@
+{
+  "id": "linker-tools",
+  "description": "GNU binutils (multiarch), lld and llvm tools as reference linkers and for map/ELF comparison",
+  "options": {}
+}

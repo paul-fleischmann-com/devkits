@@ -1,0 +1,5 @@
+{
+  "description": "Linker development medium: lite plus Clang, ARM cross compiler, debuggers, GoogleTest and static analysis",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "build-essential", "cmake-ninja", "python3", "clang-toolchain", "arm-none-eabi-gcc", "linker-tools", "binary-analysis", "elf-analysis", "debuggers", "googletest", "cppcheck", "clang-format"]
+}

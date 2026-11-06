@@ -1,0 +1,5 @@
+{
+  "description": "ELF analysis without compilers: binutils, llvm object tools, elfutils, pyelftools, DWARF and debuggers",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "python3", "linker-tools", "binary-analysis", "elf-analysis", "debuggers"]
+}

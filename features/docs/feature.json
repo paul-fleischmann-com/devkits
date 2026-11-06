@@ -1,0 +1,5 @@
+{
+  "id": "docs",
+  "description": "Doxygen, Sphinx (Markdown via MyST, Mermaid, RTD theme) and graphviz for API documentation",
+  "options": {}
+}

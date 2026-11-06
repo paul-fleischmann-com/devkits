@@ -1,0 +1,5 @@
+{
+  "id": "clang-toolchain",
+  "description": "clang, compiler-rt (libFuzzer, sanitizer runtimes), LLVM development files and nasm for C and assembly",
+  "options": {}
+}

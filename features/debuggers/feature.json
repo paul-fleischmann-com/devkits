@@ -1,0 +1,5 @@
+{
+  "id": "debuggers",
+  "description": "gdb, lldb, valgrind and strace for debugging, DWARF and core dump analysis",
+  "options": {}
+}

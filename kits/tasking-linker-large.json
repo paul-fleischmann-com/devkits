@@ -1,0 +1,5 @@
+{
+  "description": "Linker development large: medium plus fuzzing with sanitizers and documentation (Doxygen, Sphinx). The proprietary TASKING toolchain is mounted in, not installed.",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "build-essential", "cmake-ninja", "python3", "clang-toolchain", "arm-none-eabi-gcc", "linker-tools", "binary-analysis", "elf-analysis", "debuggers", "googletest", "fuzzing", "cppcheck", "clang-format", "docs"]
+}

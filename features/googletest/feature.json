@@ -1,0 +1,5 @@
+{
+  "id": "googletest",
+  "description": "GoogleTest and GoogleMock (headers and sources for CMake/CTest)",
+  "options": {}
+}

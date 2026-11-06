@@ -1,0 +1,5 @@
+{
+  "description": "Linker development lite: GCC, CMake, GNU ld/lld and ELF inspection with readelf, objdump, nm and pyelftools",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "build-essential", "cmake-ninja", "python3", "linker-tools", "elf-analysis"]
+}

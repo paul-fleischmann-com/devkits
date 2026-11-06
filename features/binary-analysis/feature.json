@@ -1,0 +1,5 @@
+{
+  "id": "binary-analysis",
+  "description": "elfutils, file, xxd and gdb-multiarch to inspect linker output (ELF, sections, symbols)",
+  "options": {}
+}

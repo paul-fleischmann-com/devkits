@@ -1,0 +1,5 @@
+{
+  "id": "fuzzing",
+  "description": "AFL++ and the AddressSanitizer/UndefinedBehaviorSanitizer runtimes for fuzzing ELF parsers and linker inputs",
+  "options": {}
+}

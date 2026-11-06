@@ -1,0 +1,5 @@
+{
+  "id": "elf-analysis",
+  "description": "pyelftools (Python ELF/DWARF parser), patchelf, pax-utils (scanelf) and dwarfdump for ELF and debug-info analysis",
+  "options": {}
+}
