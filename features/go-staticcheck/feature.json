@@ -1,0 +1,5 @@
+{
+  "id": "go-staticcheck",
+  "description": "staticcheck, the Go linter that the check step `staticcheck` of the factory uses",
+  "options": {}
+}

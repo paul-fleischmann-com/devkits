@@ -1,0 +1,5 @@
+{
+  "description": "Go: go test, go vet, gofmt (and cgo through build-essential)",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "build-essential", "go"]
+}

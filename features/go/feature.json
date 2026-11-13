@@ -1,0 +1,5 @@
+{
+  "id": "go",
+  "description": "Go toolchain from the Debian snapshot (go, gofmt, go vet, go test)",
+  "options": {}
+}
