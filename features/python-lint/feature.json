@@ -1,0 +1,5 @@
+{
+  "id": "python-lint",
+  "description": "ruff and mypy, the check steps `ruff` and `mypy` of the factory for the stack python",
+  "options": {}
+}

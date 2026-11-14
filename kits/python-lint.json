@@ -1,0 +1,5 @@
+{
+  "description": "Python with pytest, ruff and mypy (the checks of the stack python)",
+  "apt_snapshot": "20261019T000000Z",
+  "features": ["git", "python3", "python-lint"]
+}
