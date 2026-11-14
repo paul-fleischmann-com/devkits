@@ -1,5 +1,5 @@
 {
   "id": "go",
-  "description": "Go toolchain from the Debian snapshot (go, gofmt, go vet, go test)",
+  "description": "Go 1.27 from the Debian snapshot (suite trixie-backports): go, gofmt, go vet, go test",
   "options": {}
 }
