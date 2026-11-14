@@ -1,0 +1,5 @@
+{
+  "id": "python-pip",
+  "description": "venv and pip for Python 3 (the project dependencies of the preset pip install .[dev])",
+  "options": {}
+}
