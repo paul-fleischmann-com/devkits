@@ -1,5 +1,5 @@
 {
   "description": "Go and Python in one image, for a repository with both stacks (for example a Go service with a Python SDK) and the checks of both",
   "apt_snapshot": "20261019T000000Z",
-  "features": ["git", "build-essential", "python3", "python-pip", "go", "buf-tools", "go-staticcheck"]
+  "features": ["git", "build-essential", "python3", "python-pip", "python-lint", "go", "buf-tools", "go-staticcheck"]
 }

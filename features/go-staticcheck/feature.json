@@ -1,5 +1,5 @@
 {
   "id": "go-staticcheck",
-  "description": "staticcheck, the Go linter that the check step `staticcheck` of the factory uses",
+  "description": "staticcheck 2026.2.2 in a fixed version, built with go install and the Go 1.27 of the feature go (needs the feature go before it): the Go linter that the check step `staticcheck` of the factory uses",
   "options": {}
 }
