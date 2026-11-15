@@ -1,0 +1,5 @@
+{
+  "id": "buf-tools",
+  "description": "buf and the protoc plugins (go, go-grpc, grpc-gateway v2, openapiv2) in fixed versions, built with go install: the generator for projects like UDAL (needs the feature go)",
+  "options": {}
+}
