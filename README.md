@@ -42,6 +42,19 @@ python3 scripts/compose.py arm-none-eabi --commit "$(git rev-parse HEAD)"
 - Ein Kit hat mindestens ein Feature, keine doppelten, und jedes gibt es.
 - Features haben einen Namen aus `a-z`, `0-9` und `-`.
 
+## Ausnahme: Features mit Netz
+
+Die Regel oben gilt, bis ein Feature in `feature.json` ein Feld `"network"` (Liste der Hosts) deklariert. Das ist der einzige Weg, etwas
+aus dem Netz zu holen, und `tests/` prüft ihn eng: kein `curl`/`wget`, Python-Pakete nur über `pip install --require-hashes` aus einer
+`requirements*.txt` mit `==` und sha256 für **jedes** Paket, und die Hosts müssen benannt sein. Beispiel: `platformio-esp32`
+(PlatformIO und die ESP-IDF-Toolchains; Plattformen sind in `warmup/platformio.ini` auf Versionen festgelegt).
+Requirements neu erzeugen: `pip-compile --generate-hashes --allow-unsafe --strip-extras <datei>.in`.
+
+## Kits veröffentlichen
+
+Ein Kit mit `"publish": true` baut `build-kits.yml` auf `main` und legt es nach `ghcr.io/<owner>/devkit-<kit>` (`:latest` und `:<commit>`).
+Pull Requests bauen und testen nur. Aktuell: `esp32-platformio` (Nutzung: Container-Image der Firmware-Workflows, z. B. `webradio-s3-epaper`).
+
 ## Neues Feature oder Kit
 
 1. Ordner `features/<id>/` mit `feature.json` und `install.sh` anlegen (Vorlage: ein vorhandenes Feature).

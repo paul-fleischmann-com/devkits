@@ -60,7 +60,8 @@ def test_every_feature_is_well_formed(feature):
     assert script.startswith("#!/usr/bin/env bash") and "set -euo pipefail" in script
     assert not re.search(r"\|\s*(ba)?sh\b", script), "no 'download | sh'"
     commands = "\n".join(l for l in script.splitlines() if not l.lstrip().startswith(("#", "apt-get install")))
-    assert "curl" not in commands and "wget" not in commands, "packages come from the dated apt snapshot, not from the net"
+    if "network" not in meta:   # the one allowed exception is a feature that declares its network use (see test below)
+        assert "curl" not in commands and "wget" not in commands, "packages come from the dated apt snapshot, not from the net"
     assert (ROOT / "features" / feature / "install.sh").stat().st_mode & 0o111
 
 
@@ -99,3 +100,25 @@ def test_bad_kit_names_are_refused(name):
 def test_the_command_line_prints_the_containerfile_or_an_error(capsys):
     assert compose.main(["python"]) == 0 and capsys.readouterr().out.startswith("# Devkit python:")
     assert compose.main(["nope"]) == 2 and "error" in capsys.readouterr().err
+
+
+NETWORK_FEATURES = [f for f in FEATURES if "network" in json.loads((ROOT / "features" / f / "feature.json").read_text())]
+
+
+@pytest.mark.parametrize("feature", NETWORK_FEATURES)
+def test_a_feature_with_network_is_pinned_by_hash(feature):
+    """The exception to 'Debian packages only' is narrow: named hosts, Python packages only with hashes, no curl/wget."""
+    directory = ROOT / "features" / feature
+    meta = json.loads((directory / "feature.json").read_text())
+    assert isinstance(meta["network"], list) and meta["network"] and all(re.fullmatch(r"[a-z0-9.-]+", h) for h in meta["network"])
+    script = (directory / "install.sh").read_text()
+    code = "\n".join(l for l in script.splitlines() if not l.lstrip().startswith("#"))
+    assert "curl" not in code and "wget" not in code
+    for line in re.findall(r"pip\"? install[^\n]*", code):
+        assert "--require-hashes" in line, f"pip install without --require-hashes: {line}"
+    requirements = sorted(directory.glob("requirements*.txt"))
+    assert requirements, "a feature that uses pip needs pinned requirements with hashes"
+    for req in requirements:
+        entries = re.findall(r"^([A-Za-z0-9_.-]+)==\S+ \\\n(?:    --hash=sha256:[0-9a-f]{64}(?: \\)?\n)+", req.read_text(), re.M)
+        names = re.findall(r"^[A-Za-z0-9_.-]+==", req.read_text(), re.M)
+        assert entries and len(entries) == len(names), f"{req.name}: every package needs == and sha256 hashes"

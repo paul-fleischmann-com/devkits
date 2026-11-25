@@ -5,6 +5,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   list:
     runs-on: ubuntu-latest
@@ -18,6 +21,9 @@ jobs:
   build:
     needs: list
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write          # nur fuer das Veroeffentlichen von Kits mit "publish": true
     strategy:
       fail-fast: false
       matrix:
@@ -57,3 +63,28 @@ jobs:
             echo "::error title=build ${{ matrix.kit }} failed::$msg"
             exit 1
           fi
+
+      # Kits mit "publish": true landen nach ghcr.io/<owner>/devkit-<kit> (:latest und :<commit>), aber nur von main aus.
+      # Pull Requests bauen und testen nur.
+      - name: Publish ${{ matrix.kit }}
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          KIT: ${{ matrix.kit }}
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          set -euo pipefail
+          if [ "$(jq -r '.publish // false' "kits/$KIT.json")" != "true" ]; then
+            echo "kit $KIT has no \"publish\": true - not published"
+            exit 0
+          fi
+          local_tag=$(podman images --format '{{.Repository}}:{{.Tag}}' | grep -E "factory-devkit-${KIT}:" | head -n1)
+          [ -n "$local_tag" ] || { echo "::error::built image of $KIT not found"; exit 1; }
+          owner=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr 'A-Z' 'a-z')
+          dest="ghcr.io/${owner}/devkit-${KIT}"
+          printf '%s' "$REGISTRY_TOKEN" | podman login ghcr.io -u "$ACTOR" --password-stdin
+          podman tag "$local_tag" "${dest}:${GITHUB_SHA}"
+          podman tag "$local_tag" "${dest}:latest"
+          podman push "${dest}:${GITHUB_SHA}"
+          podman push "${dest}:latest"
+          echo "published ${dest}:latest (${GITHUB_SHA})"

@@ -1,0 +1,12 @@
+{
+  "description": "ESP32 firmware: PlatformIO + ESP-IDF toolchains for S3, C6 and P4 preloaded (pio = Core 6.1.18, pio62 = Core 6.2 for pioarduino), CMake and Ninja",
+  "apt_snapshot": "20261019T000000Z",
+  "features": [
+    "git",
+    "build-essential",
+    "cmake-ninja",
+    "python3",
+    "platformio-esp32"
+  ],
+  "publish": true
+}
